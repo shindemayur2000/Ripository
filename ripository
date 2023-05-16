@@ -1,0 +1,20 @@
+package com.example.bootdemo.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.bootdemo.dto.Student;
+
+public interface StudentRepository extends JpaRepository<Student, Integer>
+{
+
+	List<Student> findByAgeGreaterThan(int age);
+
+	List<Student> findByName(String name);
+
+	List<Student> findByAgeBetween(int age, int age1);
+
+	
+
+}
