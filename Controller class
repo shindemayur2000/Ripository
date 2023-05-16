@@ -1,0 +1,100 @@
+ package com.example.bootdemo.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.bootdemo.dto.Student;
+import com.example.bootdemo.repository.StudentRepository;
+
+@RestController
+public class Controller {
+	@Autowired
+	StudentRepository sr;
+	
+	
+	
+	
+	
+	
+	@PostMapping("/hi")
+	public String m1()
+	{
+		sr.save(null);
+		return "hello good evening";
+		
+	}
+	@GetMapping("/hello")
+    public void m2()
+		{
+		  System.out.println("get request in handled");	
+	}
+	
+	@PostMapping("/savedata")
+	public String save(@RequestBody Student s)
+	{
+		sr.save(s);
+		return" data Store Successfull";
+		
+	}
+	
+	@GetMapping("/fetchdata")
+	public Student fetchStydentById(@RequestParam int id)
+	{
+		Optional<Student>op=sr.findById(id);
+		Student s=op.get();
+		return s;
+	}
+	
+	@GetMapping("/findstudentbyname")
+	public List<Student> fetchStudentByName(@RequestParam String name)
+	{ 
+		List<Student> student=sr.findByName(name);
+		return student;
+		
+	}
+	
+//	@GetMapping("/findsudentbyagegreaterthan")
+//	public List<Student> findSudentByAgeGreaterThan(@RequestParam int age){
+//	List<Student> student=sr.findByAgeGreaterThan(age);
+//	return student;
+//	}
+//	
+	@DeleteMapping("/delete")
+	public String deleteStudent(@RequestParam int id )
+	{
+		sr.deleteById(id);
+		return "data deleted";
+		
+	}
+	@PostMapping("/update")
+	public String updateStudent(@RequestBody Student s)
+	{
+		sr.save(s);
+		return"dataupdated";	}
+	
+	@GetMapping("/findbyagegreaterthanEquals")
+	public List<Student> findByAgeLassThanEquals(@RequestParam int age)
+	{
+		List<Student> student=sr.findByAgeGreaterThan(age);
+		return student;
+	}
+	
+	@GetMapping("/findbyagebetween")
+	public List<Student>  findByAgeBetween(@RequestParam int age,int age1)
+	{
+		List <Student> student =sr.findByAgeBetween(age,age1);
+		return student ;
+		
+	}
+	
+	
+
+} 
